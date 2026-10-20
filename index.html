@@ -181,6 +181,17 @@ section { padding-block: clamp(48px, 9vw, 84px); }
 .m-curves svg { width: 100%; height: 100%; }
 .mosaic-note { font-size: .9rem; color: var(--ink-soft); text-align: center; }
 
+/* Galería de páginas reales */
+.hero-sheet img { width: 100%; height: auto; display: block; border-radius: 4px; }
+.gallery { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 10px; }
+@media (min-width: 640px) { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.shot { margin: 0; background: var(--sheet); border-radius: 10px; box-shadow: 0 1px 0 var(--sheet-line), 0 10px 24px var(--shadow); padding: 8px; display: flex; flex-direction: column; gap: 8px; }
+.shot:nth-child(odd) { transform: rotate(-1deg); }
+.shot:nth-child(even) { transform: rotate(1deg); }
+.shot img { width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid var(--sheet-line); background: #fff; }
+.shot figcaption { font-family: var(--f-hand); font-weight: 600; font-size: .9rem; color: var(--ink-soft); text-align: center; }
+.bono-shot { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid var(--sheet-line); background: #fff; margin-bottom: 4px; }
+
 /* Pasos */
 .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 22px; counter-reset: s; }
 @media (min-width: 720px) { .steps { grid-template-columns: repeat(3, 1fr); } }
@@ -288,17 +299,9 @@ footer { padding-block: 28px 40px; font-size: .85rem; color: var(--ink-soft); te
       <a class="btn" href="#oferta">¡Quiero mis actividades!</a>
       <p class="pay-note">Pago único de $129 MXN · Tarjeta o efectivo en OXXO</p>
     </div>
-    <!-- Troque esta folha desenhada por uma foto ou vídeo curto de uma criança fazendo as atividades -->
-    <div class="sheet hero-sheet" aria-label="Ejemplo de hoja de actividades: sílabas con la letra m">
+    <div class="sheet hero-sheet">
       <span class="tape" aria-hidden="true"></span>
-      <p class="sheet-title">Sílabas con la m</p>
-      <div class="row lines trace" aria-hidden="true"><span class="solid">ma</span> me mi mo mu</div>
-      <div class="row lines trace" aria-hidden="true">ma me mi mo</div>
-      <div class="pic" aria-hidden="true">
-        <div class="pic-cell"><b>ma</b>mamá</div>
-        <div class="pic-cell"><b>me</b>mesa</div>
-        <div class="pic-cell"><b>mo</b>moto</div>
-      </div>
+      <img src="preview/01-portada.png" alt="Portada del cuadernillo Aprendo a Leer Jugando" width="1240" height="1600" loading="eager">
     </div>
   </div>
 </header>
@@ -337,47 +340,17 @@ footer { padding-block: 28px 40px; font-size: .85rem; color: var(--ink-soft); te
     </ul>
     <p class="pay-note">Al final trae todas las soluciones, y cada parte incluye una guía rápida para el adulto.</p>
 
-    <!-- Troque estas folhas desenhadas por 6 a 9 páginas reais do material -->
-    <div class="mosaic" aria-label="Ejemplos de hojas del material">
-      <div class="sheet">
-        <p class="sheet-title">Vocales</p>
-        <div class="m-big trace" aria-hidden="true"><span class="solid">A</span> a</div>
-        <div class="m-row lines trace" aria-hidden="true">a a a a a a</div>
-      </div>
-      <div class="sheet">
-        <p class="sheet-title">Abecedario · B</p>
-        <div class="m-big trace" aria-hidden="true"><span class="solid">B</span> b</div>
-        <div class="m-row lines trace" aria-hidden="true">b b b b b b</div>
-      </div>
-      <div class="sheet">
-        <p class="sheet-title">Sílabas</p>
-        <div class="m-row lines trace" aria-hidden="true"><span class="solid">pa</span> pe pi</div>
-        <div class="m-row lines trace" aria-hidden="true"><span class="solid">sa</span> se si</div>
-        <div class="m-row lines trace" aria-hidden="true"><span class="solid">la</span> le li</div>
-      </div>
-      <div class="sheet">
-        <p class="sheet-title">Primeras palabras</p>
-        <div class="m-eq" aria-hidden="true"><span>ma</span><i>+</i><span>sa</span><i>=</i><span>masa</span></div>
-        <div class="m-eq" aria-hidden="true"><span>pa</span><i>+</i><span>to</span><i>=</i><span>pato</span></div>
-        <div class="m-eq" aria-hidden="true"><span>lu</span><i>+</i><span>na</span><i>=</i><span>luna</span></div>
-      </div>
-      <div class="sheet">
-        <p class="sheet-title">Memorama</p>
-        <div class="m-grid mem" aria-hidden="true">
-          <div>e</div><div>o</div><div>a</div><div>u</div><div>i</div><div>e</div>
-        </div>
-      </div>
-      <div class="sheet">
-        <p class="sheet-title">Sopa de letras</p>
-        <div class="m-grid sopa" aria-hidden="true">
-          <span class="f">S</span><span class="f">O</span><span class="f">L</span><span>R</span><span>T</span>
-          <span>A</span><span>M</span><span>E</span><span>N</span><span class="f">G</span>
-          <span>P</span><span class="f">M</span><span class="f">A</span><span class="f">R</span><span class="f">A</span>
-          <span>U</span><span>I</span><span>C</span><span>B</span><span class="f">T</span>
-          <span>D</span><span>E</span><span>L</span><span>F</span><span class="f">O</span>
-        </div>
-      </div>
+    <p class="eyebrow">Mira por dentro</p>
+    <div class="gallery" aria-label="Páginas reales del material">
+      <figure class="shot"><img src="preview/02-trazos.png" alt="Hoja de trazos y motricidad" width="1240" height="1600" loading="lazy"><figcaption>1 · Trazos y motricidad</figcaption></figure>
+      <figure class="shot"><img src="preview/10-vocales.png" alt="Hoja para identificar las vocales" width="1240" height="1600" loading="lazy"><figcaption>2 · Las vocales</figcaption></figure>
+      <figure class="shot"><img src="preview/03-abecedario.png" alt="Hoja del abecedario, letra D" width="1240" height="1600" loading="lazy"><figcaption>3 · El abecedario</figcaption></figure>
+      <figure class="shot"><img src="preview/04-silabas.png" alt="Hoja de sílabas con la letra P" width="1240" height="1600" loading="lazy"><figcaption>4 · Las sílabas</figcaption></figure>
+      <figure class="shot"><img src="preview/05-palabras.png" alt="Hoja de primeras palabras" width="1240" height="1600" loading="lazy"><figcaption>5 · Primeras palabras</figcaption></figure>
+      <figure class="shot"><img src="preview/11-frases.png" alt="Hoja para completar oraciones" width="1240" height="1600" loading="lazy"><figcaption>6 · Leo frases</figcaption></figure>
+      <figure class="shot"><img src="preview/06-juegos.png" alt="Sopa de letras" width="1240" height="1600" loading="lazy"><figcaption>7 · Juegos</figcaption></figure>
     </div>
+    <p class="mosaic-note">Páginas reales del cuadernillo. En total son más de 200 actividades.</p>
   </div>
 </section>
 
@@ -414,16 +387,19 @@ footer { padding-block: 28px 40px; font-size: .85rem; color: var(--ink-soft); te
     <h2>Comprando hoy, también te llevas</h2>
     <div class="bonos">
       <div class="bono">
+        <img class="bono-shot" src="preview/07-bono-navidad.png" alt="Página del cuadernillo navideño" width="1240" height="1600" loading="lazy">
         <span class="bono-tag">Bono 1</span>
         <h3>Cuadernillo navideño</h3>
         <p>15 páginas con temática de Navidad: palabras para repasar, dibujos para colorear, sopa de letras, laberinto y una carta a Santa.</p>
       </div>
       <div class="bono">
+        <img class="bono-shot" src="preview/08-bono-diploma.png" alt="Diploma ¡Ya sé las vocales!" width="1600" height="1240" loading="lazy">
         <span class="bono-tag">Bono 2</span>
         <h3>Diplomas y recompensas</h3>
         <p>4 diplomas, tabla de la semana y 30 estrellas lectoras para celebrar cada avance.</p>
       </div>
       <div class="bono">
+        <img class="bono-shot" src="preview/09-bono-calendario.png" alt="Portada del calendario de práctica" width="1240" height="1600" loading="lazy">
         <span class="bono-tag">Bono 3</span>
         <h3>Calendario de práctica</h3>
         <p>Te dice qué actividades hacer cada día, con un plan listo para dos meses.</p>
