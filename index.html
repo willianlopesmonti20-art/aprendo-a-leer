@@ -1,0 +1,505 @@
+<title>Aprendo a Leer Jugando</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@600;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&family=Playpen+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: una sola columna estrecha sobre papel de cuaderno de doble raya, con margen rojo; las hojas de actividades se dibujan en CSS. */
+:root {
+  --paper: #fbfcff;
+  --paper-2: #eef3fc;
+  --ink: #1d2a4d;
+  --ink-soft: #4a5778;
+  --rule: #c4d4f0;
+  --margin: #e5484d;
+  --crayon: #ffc531;
+  --leaf: #2e8f62;
+  --sheet: #ffffff;
+  --sheet-line: #d5e0f3;
+  --trace: #9aa8c4;
+  --shadow: rgba(29, 42, 77, .14);
+  --f-display: "Grandstander", "Baloo 2", "Comic Sans MS", system-ui, sans-serif;
+  --f-body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+  --f-hand: "Playpen Sans", "Segoe Print", "Comic Sans MS", cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #131a2c; --paper-2: #1a2340; --ink: #e9eefa; --ink-soft: #aab5d0;
+    --rule: #2a3860; --margin: #ff6b6e; --crayon: #ffc531; --leaf: #5cc495;
+    --sheet: #1d2745; --sheet-line: #33436e; --trace: #6f7fa6; --shadow: rgba(0,0,0,.4);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #131a2c; --paper-2: #1a2340; --ink: #e9eefa; --ink-soft: #aab5d0;
+  --rule: #2a3860; --margin: #ff6b6e; --crayon: #ffc531; --leaf: #5cc495;
+  --sheet: #1d2745; --sheet-line: #33436e; --trace: #6f7fa6; --shadow: rgba(0,0,0,.4);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 1.06rem;
+  line-height: 1.6;
+}
+h1, h2, h3 { font-family: var(--f-display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.1rem, 6.4vw, 3.3rem); font-weight: 800; }
+h2 { font-size: clamp(1.6rem, 4.6vw, 2.2rem); font-weight: 800; }
+h3 { font-size: 1.2rem; font-weight: 600; }
+p { margin: 0; }
+a { color: inherit; }
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+section { padding-block: clamp(48px, 9vw, 84px); }
+.stack { display: flex; flex-direction: column; gap: 18px; }
+.lead { font-size: 1.15rem; color: var(--ink-soft); max-width: 60ch; }
+.eyebrow {
+  font-family: var(--f-hand); font-weight: 600; font-size: .95rem;
+  color: var(--margin); letter-spacing: .02em;
+}
+
+/* Cuaderno de doble raya */
+.notebook {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent calc(max(16px, 4vw) - 1px), var(--margin) calc(max(16px, 4vw) - 1px), var(--margin) max(16px, 4vw), transparent max(16px, 4vw)),
+    repeating-linear-gradient(180deg, transparent 0 22px, var(--rule) 22px 23px, transparent 23px 30px, var(--rule) 30px 31px, transparent 31px 44px);
+}
+.band { background: var(--paper-2); }
+
+/* Botón tipo calcomanía */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--f-display); font-weight: 800; font-size: 1.2rem;
+  color: #1d2a4d; background: var(--crayon);
+  border: 2.5px solid #1d2a4d; border-radius: 14px;
+  padding: 16px 26px; text-decoration: none;
+  box-shadow: 4px 4px 0 #1d2a4d;
+  transition: transform .12s ease, box-shadow .12s ease;
+  text-align: center;
+}
+.btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #1d2a4d; }
+.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #1d2a4d; }
+.btn:focus-visible { outline: 3px solid var(--margin); outline-offset: 4px; }
+.btn-full { width: 100%; }
+.pay-note { font-size: .92rem; color: var(--ink-soft); }
+
+/* Encabezado */
+.hero { padding-block: clamp(40px, 8vw, 72px) clamp(48px, 9vw, 80px); }
+.hero-grid { display: grid; gap: 36px; align-items: center; }
+@media (min-width: 720px) { .hero-grid { grid-template-columns: 1.15fr .85fr; } }
+.hero-copy { min-width: 0; display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+.hero h1 .hl { background: linear-gradient(transparent 62%, color-mix(in srgb, var(--crayon) 70%, transparent) 62%); padding: 0 .08em; }
+.ages {
+  display: inline-flex; gap: 8px; flex-wrap: wrap;
+}
+.chip {
+  font-family: var(--f-hand); font-size: .9rem; font-weight: 600;
+  border: 1.5px solid var(--ink); border-radius: 999px; padding: 3px 12px;
+  background: var(--paper);
+}
+
+/* Hojas de actividades dibujadas */
+.sheet {
+  background: var(--sheet);
+  border-radius: 6px;
+  box-shadow: 0 1px 0 var(--sheet-line), 0 10px 24px var(--shadow);
+  padding: 16px 16px 18px;
+  position: relative;
+  min-width: 0;
+}
+.sheet-title { font-family: var(--f-hand); font-weight: 600; font-size: .85rem; color: var(--ink-soft); }
+.trace {
+  font-family: var(--f-display); font-weight: 800;
+  color: transparent; -webkit-text-stroke: 1.6px var(--trace);
+  letter-spacing: .06em;
+}
+.trace .solid { color: var(--ink); -webkit-text-stroke: 0; }
+.lines {
+  background-image: repeating-linear-gradient(180deg, transparent 0 calc(var(--h, 56px) * .22), var(--sheet-line) calc(var(--h, 56px) * .22) calc(var(--h, 56px) * .22 + 1px), transparent 0 calc(var(--h, 56px) * .78), var(--sheet-line) calc(var(--h, 56px) * .78) calc(var(--h, 56px) * .78 + 1px), transparent 0 var(--h, 56px));
+}
+.hero-sheet { transform: rotate(2.2deg); max-width: 340px; justify-self: center; width: 100%; }
+.hero-sheet .row { --h: 64px; font-size: 2.6rem; line-height: 64px; white-space: nowrap; overflow: hidden; }
+.hero-sheet .pic {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px;
+}
+.pic-cell {
+  border: 1.5px dashed var(--sheet-line); border-radius: 10px; padding: 8px 4px;
+  text-align: center; font-family: var(--f-hand); font-size: .9rem;
+}
+.pic-cell b { display: block; font-family: var(--f-display); font-size: 1.4rem; color: var(--margin); }
+.tape {
+  position: absolute; top: -12px; left: 50%; width: 84px; height: 24px; transform: translateX(-50%) rotate(-3deg);
+  background: color-mix(in srgb, var(--crayon) 55%, transparent);
+}
+
+/* Problema */
+.checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.checklist li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; }
+.box {
+  width: 26px; height: 26px; border: 2px solid var(--ink); border-radius: 6px; margin-top: 2px;
+  display: grid; place-items: center; font-family: var(--f-hand); font-weight: 600; color: var(--margin); font-size: 1.1rem;
+}
+.bd { font-family: var(--f-display); font-weight: 800; color: var(--margin); }
+.callout {
+  font-family: var(--f-hand); font-size: 1.15rem; line-height: 1.5;
+  border-left: 3px solid var(--margin); padding-left: 16px;
+}
+
+/* Qué incluye */
+.includes { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px 28px; }
+@media (min-width: 640px) { .includes { grid-template-columns: 1fr 1fr; } }
+.includes li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+.includes li::before { content: ""; width: 12px; height: 12px; margin-top: .45em; border-radius: 50%; background: var(--leaf); }
+.includes strong { font-weight: 800; }
+
+.mosaic { display: grid; gap: 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 8px; }
+@media (min-width: 640px) { .mosaic { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.mosaic .sheet { aspect-ratio: 3 / 4; max-width: 100%; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+.mosaic .sheet:nth-child(odd) { transform: rotate(-1.2deg); }
+.mosaic .sheet:nth-child(even) { transform: rotate(1deg); }
+.m-big { font-size: clamp(2.6rem, 9vw, 3.6rem); line-height: 1; text-align: center; margin-top: 6px; }
+.m-row { --h: 40px; font-size: 1.7rem; line-height: 40px; white-space: nowrap; overflow: hidden; }
+.m-eq { font-family: var(--f-display); font-weight: 800; font-size: 1.25rem; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.m-eq span { border: 1.5px solid var(--sheet-line); border-radius: 8px; padding: 2px 8px; }
+.m-eq i { font-style: normal; color: var(--ink-soft); }
+.m-grid { display: grid; gap: 6px; flex: 1; }
+.m-grid.mem { grid-template-columns: repeat(3, 1fr); }
+.m-grid.mem div { border: 1.5px solid var(--sheet-line); border-radius: 8px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; font-size: 1.3rem; }
+.m-grid.mem div:nth-child(3n+1) { background: color-mix(in srgb, var(--crayon) 35%, transparent); }
+.m-grid.sopa { grid-template-columns: repeat(5, 1fr); font-family: var(--f-display); font-weight: 600; text-align: center; font-size: .95rem; align-content: start; }
+.m-grid.sopa .f { background: color-mix(in srgb, var(--leaf) 28%, transparent); border-radius: 4px; }
+.m-curves { flex: 1; }
+.m-curves svg { width: 100%; height: 100%; }
+.mosaic-note { font-size: .9rem; color: var(--ink-soft); text-align: center; }
+
+/* Pasos */
+.steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 22px; counter-reset: s; }
+@media (min-width: 720px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+.steps li { counter-increment: s; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.steps li::before {
+  content: counter(s);
+  font-family: var(--f-display); font-weight: 800; font-size: 1.4rem;
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  border: 2.5px solid var(--ink); background: var(--crayon); color: #1d2a4d;
+}
+
+/* Para quién */
+.who { display: flex; flex-wrap: wrap; gap: 10px; }
+.who .chip { font-size: 1rem; padding: 6px 16px; }
+
+/* Bonos */
+.bonos { display: grid; gap: 18px; }
+@media (min-width: 720px) { .bonos { grid-template-columns: repeat(3, 1fr); } }
+.bono {
+  border: 2px dashed var(--ink-soft); border-radius: 14px; padding: 20px 18px;
+  display: flex; flex-direction: column; gap: 8px; min-width: 0; background: var(--paper);
+}
+.bono-tag { font-family: var(--f-hand); font-weight: 600; color: var(--margin); font-size: .9rem; }
+.bono p { color: var(--ink-soft); font-size: .98rem; }
+.deadline {
+  font-family: var(--f-hand); font-weight: 600; text-align: center;
+  background: color-mix(in srgb, var(--crayon) 30%, transparent); border-radius: 10px; padding: 10px 14px;
+}
+
+/* Oferta */
+.offer {
+  background: var(--sheet); border: 2.5px solid var(--ink); border-radius: 20px;
+  box-shadow: 8px 8px 0 var(--ink);
+  padding: clamp(24px, 5vw, 40px);
+  display: flex; flex-direction: column; gap: 22px;
+}
+.price-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.price { font-family: var(--f-display); font-weight: 800; font-size: clamp(3.4rem, 12vw, 4.6rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.price-cur { font-family: var(--f-display); font-weight: 600; font-size: 1.4rem; }
+.price-once { font-family: var(--f-hand); color: var(--ink-soft); }
+.offer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.offer li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; }
+.offer li::before { content: "✓"; font-weight: 800; color: var(--leaf); font-size: 1.15rem; }
+.pay-methods { display: flex; gap: 8px; flex-wrap: wrap; }
+.pay-methods span { font-size: .85rem; font-weight: 800; border: 1.5px solid var(--sheet-line); border-radius: 6px; padding: 3px 10px; color: var(--ink-soft); }
+
+/* Garantía */
+.guarantee { display: grid; gap: 24px; align-items: center; }
+@media (min-width: 640px) { .guarantee { grid-template-columns: auto 1fr; } }
+.stamp {
+  width: 140px; height: 140px; border-radius: 50%; border: 3px double var(--leaf);
+  color: var(--leaf); display: grid; place-items: center; text-align: center;
+  transform: rotate(-8deg); font-family: var(--f-display); font-weight: 800; line-height: 1.05;
+  justify-self: center;
+}
+.stamp b { display: block; font-size: 3rem; }
+.stamp small { font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
+
+/* Preguntas */
+.faq { display: flex; flex-direction: column; border-top: 1.5px solid var(--rule); }
+.faq details { border-bottom: 1.5px solid var(--rule); }
+.faq summary {
+  cursor: pointer; list-style: none; padding: 18px 0; font-weight: 800; font-size: 1.08rem;
+  display: flex; justify-content: space-between; gap: 16px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-display); font-size: 1.5rem; line-height: 1; color: var(--margin); }
+.faq details[open] summary::after { content: "–"; }
+.faq summary:focus-visible { outline: 2px solid var(--margin); outline-offset: 2px; }
+.faq details p { padding-bottom: 18px; color: var(--ink-soft); max-width: 62ch; }
+
+/* Cierre */
+.final { text-align: center; }
+.final .stack { align-items: center; }
+footer { padding-block: 28px 40px; font-size: .85rem; color: var(--ink-soft); text-align: center; }
+
+/* Barra fija en celular */
+.sticky-buy {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  background: var(--sheet); border-top: 2px solid var(--ink);
+  padding-top: 10px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.sticky-buy .p { font-family: var(--f-display); font-weight: 800; font-size: 1.3rem; white-space: nowrap; }
+.sticky-buy .p small { font-size: .8rem; font-weight: 600; }
+.sticky-buy .btn { font-size: 1rem; padding: 10px 16px; box-shadow: 3px 3px 0 #1d2a4d; }
+@media (max-width: 719px) { body { padding-bottom: 84px; } }
+@media (min-width: 720px) { .sticky-buy { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn:hover, .btn:active { transition: none; transform: none; }
+}
+</style>
+
+<!-- ENCABEZADO -->
+<header class="hero notebook">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="ages"><span class="chip">4 a 7 años</span><span class="chip">PDF para imprimir</span></span>
+      <h1>Ayuda a tu hijo a <span class="hl">leer y escribir</span> jugando</h1>
+      <p class="lead">Más de 200 actividades listas para imprimir, ordenadas paso a paso desde los primeros trazos hasta las primeras oraciones. Con solo 15 minutos de juego al día.</p>
+      <a class="btn" href="#oferta">¡Quiero mis actividades!</a>
+      <p class="pay-note">Pago único de $129 MXN · Tarjeta o efectivo en OXXO</p>
+    </div>
+    <!-- Troque esta folha desenhada por uma foto ou vídeo curto de uma criança fazendo as atividades -->
+    <div class="sheet hero-sheet" aria-label="Ejemplo de hoja de actividades: sílabas con la letra m">
+      <span class="tape" aria-hidden="true"></span>
+      <p class="sheet-title">Sílabas con la m</p>
+      <div class="row lines trace" aria-hidden="true"><span class="solid">ma</span> me mi mo mu</div>
+      <div class="row lines trace" aria-hidden="true">ma me mi mo</div>
+      <div class="pic" aria-hidden="true">
+        <div class="pic-cell"><b>ma</b>mamá</div>
+        <div class="pic-cell"><b>me</b>mesa</div>
+        <div class="pic-cell"><b>mo</b>moto</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- EL PROBLEMA -->
+<section>
+  <div class="wrap stack">
+    <p class="eyebrow">¿Te suena familiar?</p>
+    <h2>Quieres ayudarle en casa, pero no sabes por dónde empezar</h2>
+    <ul class="checklist">
+      <li><span class="box" aria-hidden="true">✓</span><span>Tu hijo confunde letras como la <span class="bd">b</span> y la <span class="bd">d</span>.</span></li>
+      <li><span class="box" aria-hidden="true">✓</span><span>Se frustra o se aburre cuando intentas enseñarle.</span></li>
+      <li><span class="box" aria-hidden="true">✓</span><span>La maestra te pidió reforzar en casa y no tienes un plan.</span></li>
+      <li><span class="box" aria-hidden="true">✓</span><span>Pasas horas buscando hojas en internet y nada está en orden.</span></li>
+    </ul>
+    <p class="callout">No es tu culpa. La mayoría de los niños aprenden mejor cuando leer se siente como un juego y no como una tarea.</p>
+  </div>
+</section>
+
+<!-- LA SOLUCIÓN + QUÉ INCLUYE -->
+<section class="band">
+  <div class="wrap stack">
+    <p class="eyebrow">Te presentamos</p>
+    <h2>Aprendo a Leer Jugando</h2>
+    <p class="lead">Un pack de actividades organizado paso a paso. Tu hijo avanza a su ritmo, gana confianza y se divierte mientras aprende. Sin aplicaciones ni pantallas: imprimes y empiezan a practicar juntos.</p>
+
+    <h3>Las 7 partes del cuadernillo</h3>
+    <ul class="includes">
+      <li><span><strong>1. Trazos y motricidad:</strong> líneas, curvas, zigzag y laberintos para preparar la mano.</span></li>
+      <li><span><strong>2. Las vocales:</strong> trazar, colorear e identificar cada vocal.</span></li>
+      <li><span><strong>3. El abecedario:</strong> una hoja para cada letra, de la A a la Z y la ñ.</span></li>
+      <li><span><strong>4. Las sílabas:</strong> ma, me, mi, mo, mu… con dibujos para asociar.</span></li>
+      <li><span><strong>5. Primeras palabras:</strong> une sílabas y forma tus primeras palabras.</span></li>
+      <li><span><strong>6. Leo frases:</strong> oraciones y cuentos cortos con preguntas.</span></li>
+      <li><span><strong>7. Juegos:</strong> memoramas, sopas de letras y rompecabezas.</span></li>
+    </ul>
+    <p class="pay-note">Al final trae todas las soluciones, y cada parte incluye una guía rápida para el adulto.</p>
+
+    <!-- Troque estas folhas desenhadas por 6 a 9 páginas reais do material -->
+    <div class="mosaic" aria-label="Ejemplos de hojas del material">
+      <div class="sheet">
+        <p class="sheet-title">Vocales</p>
+        <div class="m-big trace" aria-hidden="true"><span class="solid">A</span> a</div>
+        <div class="m-row lines trace" aria-hidden="true">a a a a a a</div>
+      </div>
+      <div class="sheet">
+        <p class="sheet-title">Abecedario · B</p>
+        <div class="m-big trace" aria-hidden="true"><span class="solid">B</span> b</div>
+        <div class="m-row lines trace" aria-hidden="true">b b b b b b</div>
+      </div>
+      <div class="sheet">
+        <p class="sheet-title">Sílabas</p>
+        <div class="m-row lines trace" aria-hidden="true"><span class="solid">pa</span> pe pi</div>
+        <div class="m-row lines trace" aria-hidden="true"><span class="solid">sa</span> se si</div>
+        <div class="m-row lines trace" aria-hidden="true"><span class="solid">la</span> le li</div>
+      </div>
+      <div class="sheet">
+        <p class="sheet-title">Primeras palabras</p>
+        <div class="m-eq" aria-hidden="true"><span>ma</span><i>+</i><span>sa</span><i>=</i><span>masa</span></div>
+        <div class="m-eq" aria-hidden="true"><span>pa</span><i>+</i><span>to</span><i>=</i><span>pato</span></div>
+        <div class="m-eq" aria-hidden="true"><span>lu</span><i>+</i><span>na</span><i>=</i><span>luna</span></div>
+      </div>
+      <div class="sheet">
+        <p class="sheet-title">Memorama</p>
+        <div class="m-grid mem" aria-hidden="true">
+          <div>e</div><div>o</div><div>a</div><div>u</div><div>i</div><div>e</div>
+        </div>
+      </div>
+      <div class="sheet">
+        <p class="sheet-title">Sopa de letras</p>
+        <div class="m-grid sopa" aria-hidden="true">
+          <span class="f">S</span><span class="f">O</span><span class="f">L</span><span>R</span><span>T</span>
+          <span>A</span><span>M</span><span>E</span><span>N</span><span class="f">G</span>
+          <span>P</span><span class="f">M</span><span class="f">A</span><span class="f">R</span><span class="f">A</span>
+          <span>U</span><span>I</span><span>C</span><span>B</span><span class="f">T</span>
+          <span>D</span><span>E</span><span>L</span><span>F</span><span class="f">O</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section>
+  <div class="wrap stack">
+    <p class="eyebrow">Así de fácil</p>
+    <h2>Cómo funciona</h2>
+    <ol class="steps">
+      <li><h3>Compra segura</h3><p>Paga con tarjeta de débito, crédito o en efectivo en OXXO.</p></li>
+      <li><h3>Recibe tu acceso</h3><p>Te llega al correo en cuanto se confirma tu pago.</p></li>
+      <li><h3>Imprime y juega</h3><p>Imprime las hojas que quieras, cuantas veces quieras, en casa o en la papelería.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- PARA QUIÉN ES -->
+<section class="band">
+  <div class="wrap stack">
+    <h2>Para quién es</h2>
+    <div class="who">
+      <span class="chip">Mamás y papás de niños de 4 a 7 años</span>
+      <span class="chip">Maestras de preescolar y primer grado</span>
+      <span class="chip">Tutoras y terapeutas de lenguaje</span>
+    </div>
+    <p class="lead">No necesitas experiencia enseñando. Cada actividad trae una instrucción corta y sencilla.</p>
+  </div>
+</section>
+
+<!-- BONOS -->
+<section>
+  <div class="wrap stack">
+    <p class="eyebrow">De regalo</p>
+    <h2>Comprando hoy, también te llevas</h2>
+    <div class="bonos">
+      <div class="bono">
+        <span class="bono-tag">Bono 1</span>
+        <h3>Cuadernillo navideño</h3>
+        <p>15 páginas con temática de Navidad: palabras para repasar, dibujos para colorear, sopa de letras, laberinto y una carta a Santa.</p>
+      </div>
+      <div class="bono">
+        <span class="bono-tag">Bono 2</span>
+        <h3>Diplomas y recompensas</h3>
+        <p>4 diplomas, tabla de la semana y 30 estrellas lectoras para celebrar cada avance.</p>
+      </div>
+      <div class="bono">
+        <span class="bono-tag">Bono 3</span>
+        <h3>Calendario de práctica</h3>
+        <p>Te dice qué actividades hacer cada día, con un plan listo para dos meses.</p>
+      </div>
+    </div>
+    <!-- Só mantenha esta data se ela for real -->
+    <p class="deadline">El cuadernillo navideño está incluido en compras hasta el 24 de diciembre.</p>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section id="oferta" class="band">
+  <div class="wrap">
+    <div class="offer">
+      <h2>Todo esto por un solo pago</h2>
+      <div class="price-row">
+        <span class="price">$129</span><span class="price-cur">MXN</span>
+        <span class="price-once">sin mensualidades</span>
+      </div>
+      <ul>
+        <li>Más de 200 actividades listas para imprimir</li>
+        <li>Guía para el adulto en cada una de las 7 partes</li>
+        <li>3 bonos incluidos</li>
+        <li>Acceso inmediato y para siempre</li>
+        <li>Imprime cuantas veces quieras</li>
+      </ul>
+      <!-- Troque o href pelo link do checkout -->
+      <a class="btn btn-full" href="#oferta">¡Sí, quiero ayudar a mi hijo a leer!</a>
+      <div class="pay-methods" aria-label="Formas de pago">
+        <span>Débito</span><span>Crédito</span><span>Efectivo en OXXO</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTÍA -->
+<section>
+  <div class="wrap guarantee">
+    <div class="stamp" aria-hidden="true"><div><b>7</b><small>días de<br>garantía</small></div></div>
+    <div class="stack">
+      <h2>Garantía de 7 días sin riesgo</h2>
+      <p class="lead">Si el material no es lo que esperabas, escríbenos dentro de los primeros 7 días y te devolvemos el 100% de tu dinero, sin complicaciones.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PREGUNTAS FRECUENTES -->
+<section class="band">
+  <div class="wrap stack">
+    <h2>Preguntas frecuentes</h2>
+    <div class="faq">
+      <details id="faq-fisico"><summary>¿Es un producto físico?</summary><p>No. Es un material digital en PDF. Lo imprimes en casa o en cualquier papelería.</p></details>
+      <details id="faq-recibo"><summary>¿Cómo lo recibo?</summary><p>Llega a tu correo en cuanto se confirma tu pago. Si pagas en efectivo en OXXO, lo recibes cuando el pago se acredita, normalmente en menos de 24 horas.</p></details>
+      <details id="faq-imprimir"><summary>¿Puedo imprimirlo varias veces?</summary><p>Sí, todas las veces que quieras, para tu hijo o para tus alumnos. Se imprime en hoja tamaño carta, en blanco y negro o a color.</p></details>
+      <details id="faq-edad"><summary>¿Para qué edad es?</summary><p>Para niños de 4 a 7 años, o para cualquier niño que esté empezando a leer.</p></details>
+      <details id="faq-ensenar"><summary>¿Necesito saber enseñar?</summary><p>No. Cada actividad viene con una instrucción corta y fácil de seguir.</p></details>
+      <details id="faq-pago"><summary>¿Cómo puedo pagar?</summary><p>Con tarjeta de débito o crédito, o en efectivo en cualquier OXXO.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- LLAMADO FINAL -->
+<section class="final notebook">
+  <div class="wrap stack">
+    <h2>Tu hijo puede empezar a practicar hoy mismo</h2>
+    <p class="lead">En unos minutos tendrás todo listo para imprimir y convertir la lectura en el momento favorito del día.</p>
+    <a class="btn" href="#oferta">¡Quiero empezar ahora!</a>
+    <p class="pay-note">$129 MXN · Garantía de 7 días · Solo 15 minutos al día</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Aprendo a Leer Jugando · Material digital en PDF</div>
+</footer>
+
+<div class="sticky-buy">
+  <span class="p">$129 <small>MXN</small></span>
+  <a class="btn" href="#oferta">¡Lo quiero!</a>
+</div>
